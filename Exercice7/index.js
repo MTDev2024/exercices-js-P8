@@ -1,49 +1,36 @@
 function convertToBinary() {
-  // Récupération input
   const input = document.getElementById("decimalInput");
-  // Récupération paragraphe résultat
   const result = document.getElementById("binaryResult");
 
-  // Suppression espaces inutiles
+  // 1. Récupérer saisie + supprimer espaces inutiles
   const value = input.value.trim();
 
-  // Vérification si vide
-  if (value === "") {
-    result.textContent = "Veuillez entrer un nombre décimal.";
-    return; // stoppe ici
+  // 2. Si input vide ou contient autre chose qu’un nombre entier
+  if (!/^\d+$/.test(value)) {
+    result.textContent = ""; // <p> reste vide pour les saisies invalides
+    return; // Stoppe la fonction
   }
 
-  // Conversion en entier
-  let decimalNumber = parseInt(value, 10);
+  // 3. Conversion input en nombre entier
+  let num = Number(value); // Number() est sûr ici car déjà validé par le regex
 
-  // Vérification si nombre valide
-  if (isNaN(decimalNumber)) {
-    result.textContent = "Veuillez entrer un nombre valide.";
-    return; // stoppe ici
+  // 4. Cas particulier : saisie = 0
+  if (num === 0) {
+    result.textContent = "0"; // Afficher directement 0
+    return;
   }
 
-  // Cas spécial pour 0
-  if (decimalNumber === 0) {
-    result.textContent = "0";
-    return; // stoppe ici
+  // 5. Conversion décimal -> binaire
+  const binaryArray = []; // Stocke les restes
+  while (num > 0) {
+    const remainder = num % 2; // Reste de la division par 2
+    binaryArray.push(remainder); // Ajouter le reste dans le tableau
+    num = Math.floor(num / 2); // Division entière
   }
 
-  // Création tableau pour stocker restes
-  const binaryArray = [];
-
-  // Conversion en binaire
-  while (decimalNumber > 0) {
-    // Calcul reste
-    const remainder = decimalNumber % 2;
-    // Ajout reste au tableau
-    binaryArray.push(remainder);
-    // Division entière
-    decimalNumber = Math.floor(decimalNumber / 2);
-  }
-
-  // Inversion tableau pour obtenir le bon ordre
+  // 6. Inverser le tableau pour obtenir l’ordre correct
   binaryArray.reverse();
 
-  // Affichage résultat
+  // 7. Afficher le résultat dans le <p>
   result.textContent = binaryArray.join("");
 }

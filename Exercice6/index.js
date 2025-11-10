@@ -33,7 +33,7 @@ function calculateResult() {
 
   // Vérifier si le résultat est infini (division par zéro)
   if (result === Infinity || result === -Infinity) {
-    display.value = "Division par zéro impossible"; // Afficher un message d'erreur
+    display.value = "Division by zero is not allowed"; // Afficher un message d'erreur
     return; // Stopper la fonction
   }
 
